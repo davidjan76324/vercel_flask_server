@@ -52,10 +52,7 @@ def handle_news():
     for i in info:
         i["url"] = news_domain + i["url"]
 
-    return jsonify({
-        "中文1": "你好",
-        "中文2": "世界"
-    })
+    return jsonify(info)
     # return app.response_class(
     #     response=json.dumps(info, ensure_ascii=False),
     #     status=200,
