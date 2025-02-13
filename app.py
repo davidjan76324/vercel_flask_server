@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 # 測試數據存儲（在實際應用中應該使用數據庫）
 items = []
+news_domain = "https://tw.news.yahoo.com/"
 
 @app.route('/')
 def home():
@@ -28,6 +29,24 @@ def handle_items():
     
     # GET 請求返回所有項目
     return jsonify(items)
+@app.route('/api/news', methods=['POST'])
+def handle_news():
+    data = request.get_json()
+    if not data or 'newsObject' not in data:
+        return jsonify({"error": "請提供有效的數據"})
+    
+    if not data or 'search' not in data:
+        return jsonify({"error": "請提供有效的數據"})
+    
+    newsObject = data['newsObject']
+    if newsObject == "":
+        return jsonify({"error": "請提供有效的數據"})
+    
+    # 將新聞對象添加到列表中
+    info = newsObject["context"]["dispatcher"]["stores"]["IndexDataStore"]["indexData"][data["search"]]
+    return jsonify(info)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True) 
