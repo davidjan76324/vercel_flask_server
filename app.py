@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import json
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False  # 確保 JSON 能正確處理 Unicode
+app.config['JSONIFY_MIMETYPE'] = "application/json; charset=utf-8"
 
 # 測試數據存儲（在實際應用中應該使用數據庫）
 items = []
@@ -45,7 +47,11 @@ def handle_news():
     
     # 將新聞對象添加到列表中
     info = newsObject[data["search"]]
-    return json.dumps(info, ensure_ascii=False)
+    return app.response_class(
+        response=json.dumps(info, ensure_ascii=False),
+        status=200,
+        mimetype='application/json; charset=utf-8'
+    )
 
 
 
