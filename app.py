@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False  # 確保 JSON 能正確處理 Unicode
+app.config['JSONIFY_MIMETYPE'] = "application/json; charset=utf-8"
 
 # 測試數據存儲（在實際應用中應該使用數據庫）
 items = []
@@ -31,7 +33,7 @@ def handle_items():
     return jsonify(items)
 @app.route('/api/news', methods=['POST'])
 def handle_news():
-    data = request.get_json()
+    data = request.get_json(force=True) 
     if not data or 'newsObject' not in data:
         return jsonify({"error": "請提供有效的數據"})
     
