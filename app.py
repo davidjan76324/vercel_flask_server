@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, request, jsonify
+import urllib.parse
 import json
 
 app = Flask(__name__)
@@ -50,7 +51,7 @@ def handle_news():
     info = newsObject[data["search"]]
 
     for i in info:
-        i["url"] = news_domain + i["url"]
+        i["url"] = news_domain + urllib.parse.quote(i["url"])
 
 
     return app.response_class(
@@ -63,4 +64,3 @@ def handle_news():
 
 if __name__ == '__main__':
     app.run(debug=True) 
-
