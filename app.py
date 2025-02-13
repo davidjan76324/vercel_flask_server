@@ -43,7 +43,7 @@ def handle_news():
         return jsonify({"error": "請提供有效的數據"})
     
     # 將新聞對象添加到列表中
-    info = newsObject["context"]["dispatcher"]["stores"]["IndexDataStore"]["indexData"][data["search"]]
+    info = newsObject[data["search"]]
     return jsonify(info)
 
 
