@@ -36,7 +36,7 @@ def handle_items():
     return jsonify(items)
 @app.route('/api/news', methods=['POST'])
 def handle_news():
-    data = request.get_json(force=True) 
+    data = request.get_json() 
     if not data or 'newsObject' not in data:
         return jsonify({"error": "請提供有效的數據"})
     
@@ -53,7 +53,10 @@ def handle_news():
     for i in info:
         i["url"] = news_domain + i["url"]
 
-    return jsonify(info)
+    return jsonify({
+        "中文1": "你好",
+        "中文2": "世界"
+    })
     # return app.response_class(
     #     response=json.dumps(info, ensure_ascii=False),
     #     status=200,
