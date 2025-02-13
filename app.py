@@ -51,7 +51,7 @@ def handle_news():
     info = newsObject[data["search"]]
 
     for i in info:
-        i["url"] = news_domain + urllib.parse.quote(i["url"])
+        i["url"] = urllib.parse.quote(news_domain + i["url"])
 
 
     return app.response_class(
