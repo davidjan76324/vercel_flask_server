@@ -4,8 +4,7 @@ import urllib.parse
 import json
 
 app = Flask(__name__)
-app.config['JSON_AS_ASCII'] = False  # 確保 JSON 能正確處理 Unicode
-app.config['JSONIFY_MIMETYPE'] = "application/json; charset=utf-8"
+app.json.ensure_ascii = False
 
 # 測試數據存儲（在實際應用中應該使用數據庫）
 items = []
