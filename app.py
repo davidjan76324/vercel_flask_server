@@ -49,10 +49,25 @@ def handle_news():
     # 將新聞對象添加到列表中
     info = newsObject[data["search"]]
 
+
     for i in info:
         i["url"] = news_domain + i["url"]
 
-    return jsonify(info)
+    index = 1
+    news_info = ''
+
+    for article in info[:10]:
+        news_info += f'''<div class="article">
+            <h2>{index}.{article['title']}</h2>
+            <p>{article['summary']}</p>
+            <p><a href="{article['url']}">閱讀更多</a></p>
+        </div>'''
+        index += 1
+
+    
+        
+
+    return news_info, 200
     # return app.response_class(
     #     response=json.dumps(info, ensure_ascii=False),
     #     status=200,
