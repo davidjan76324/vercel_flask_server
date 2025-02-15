@@ -41,31 +41,28 @@ def handle_news():
     
     if not data or 'search' not in data:
         return jsonify({"error": "請提供有效的數據"})
+        
+    if not data or 'max' not in data:
+        return jsonify({"error": "請提供有效的數據"})
     
     newsObject = data['newsObject']
     if newsObject == "":
         return jsonify({"error": "請提供有效的數據"})
     
     # 將新聞對象添加到列表中
-    info = newsObject[data["search"]]
+    info = newsObject[data["search"]] # 搜尋結果
+    index = 1 # 新聞序號
+    news_info = '' # 新聞內容
+    news_max = int(data["max"]) # 新聞數量
 
-
-    for i in info:
-        i["url"] = news_domain + i["url"]
-
-    index = 1
-    news_info = ''
-
-    for article in info[:10]:
+    for article in info[:news_max]:
         news_info += f'''<div class="article">
             <h2>{index}.{article['title']}</h2>
             <p>{article['summary']}</p>
-            <p><a href="{article['url']}">閱讀更多</a></p>
+            <p><a href="{news_domain}{article['url']}">閱讀更多</a></p>
         </div>'''
         index += 1
 
-    
-        
 
     return news_info, 200
     # return app.response_class(
